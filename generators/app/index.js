@@ -5,19 +5,6 @@ var yosay = require('yosay');
 var mkdir = require('mkdirp');
 
 module.exports = yeoman.generators.Base.extend({
-  prompting: function () {
-      this.prompt({
-          type: 'input',
-          name: 'name',
-          message: 'Your project name',
-          default: 'xreact-app'
-      }, function (answers) {
-        this.log(answers.name);
-        done();
-      }.bind(this));
-
-      creatingFolderStructure();
-  },
 
   _creatingFolderStructure: function() {
     var development = mkdir('./development', function(err) {
@@ -149,5 +136,25 @@ module.exports = yeoman.generators.Base.extend({
       if (err) console.err(err);
       else console.log('Statics resource production path has been created!');
     });
+  },
+
+  prompting: function () {
+      this.prompt({
+          type: 'input',
+          name: 'name',
+          message: 'Your project name',
+          default: 'xreact-app'
+      }, function (answers) {
+        this.log(answers.name);
+      }.bind(this));
+
+      this.promp({
+        type: 'confirm',
+        name: 'scss',
+        message: 'Using scss'
+      });
+
+      this._creatingFolderStructure();
   }
+
 });
